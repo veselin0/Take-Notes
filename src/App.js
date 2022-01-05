@@ -7,7 +7,7 @@ import Editor from "./components/Editor";
 import { data } from "./data";
 
 const App = () => {
-    const [notes, setNotes] = useState(
+    const [notes, setNotes] = useState(() =>
         JSON.parse(localStorage.getItem("notes")) || []
     );
 
