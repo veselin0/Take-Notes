@@ -29,14 +29,48 @@ const App = () => {
     };
 
     const updateNote = (text) => {
-        setNotes((oldNotes) =>
-            oldNotes.map((oldNote) => {
-                return oldNote.id === currentNoteId
-                    ? { ...oldNote, body: text }
-                    : oldNote;
-            })
-        );
-    };
+        // Try to rearrange the most recently-modified
+        // not to be at the top
+        setNotes(oldNotes => {
+          // Create a new empty array
+            // Loop over the original array
+                // if the id matches
+                    // put the updated note at the 
+                    // beginning of the new array
+                // else
+                    // push the old note to the end
+                    // of the new array
+            // return the new array  
+            
+            const newArray = [];
+            for (let i = 0; i < oldNotes.length; i++) {
+                const oldNote = oldNotes[i];
+                if (oldNote.id === currentNoteId) {
+                    newArray.unshift({...oldNote, body: text});
+                } else {
+                    newArray.push(oldNote);
+                }
+            }
+                return newArray;
+        });
+    
+    }
+
+    // This does not rearrange the notes list
+    // const updateNote = (text) => {
+    //     setNotes((oldNotes) =>
+    //         oldNotes.map((oldNote) => {
+    //             return oldNote.id === currentNoteId
+    //                 ? { ...oldNote, body: text }
+    //                 : oldNote;
+    //         })
+    //     );
+    // };
+
+    const deleteNote = (event, noteId) => {
+        event.stopPropagation();
+        setNotes(oldNotes => oldNotes.filter(note => note.id !== noteId));
+    }
 
     const findCurrentNote = () => {
         return (
@@ -59,6 +93,7 @@ const App = () => {
                         currentNote={findCurrentNote()}
                         setCurrentNoteId={setCurrentNoteId}
                         newNote={createNewNote}
+                        deleteNote={deleteNote}
                     />
                     {currentNoteId && notes.length > 0 && (
                         <Editor

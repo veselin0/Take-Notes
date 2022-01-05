@@ -1,4 +1,4 @@
-import React from "react"
+
 
 export default function Sidebar(props) {
     const noteElements = props.notes.map((note, index) => (
@@ -10,7 +10,13 @@ export default function Sidebar(props) {
                 }`}
                 onClick={() => props.setCurrentNoteId(note.id)}
             >
-                <h4 className="text-snippet">Note {index + 1}</h4>
+                <h4 className="text-snippet">Note {note.body.split("\n")[0]}</h4>
+                <button 
+                    className="delete-btn"
+                    onClick={(event) => props.deleteNote(event, note.id)}
+                >
+                    <i className="gg-trash trash-icon"></i>
+                </button>
             </div>
         </div>
     ))
